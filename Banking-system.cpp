@@ -1,97 +1,105 @@
+
 #include<fstream>
 #include<iostream>
 #include<conio.h>
 
 using namespace std;
 
-// CLASS USED IN PROJECT
 
-class account{
-int acno;
-char name[50];
-double amount;
-char type;
+//  CLASS USED IN PROJECT
 
+class account
+{
+	int acno;
+	char name[50];
+	double amount;
+	char type;
 public:
-void create_account();
-void show_account();
-void modify();
-void depo(int);
-void wdraw(int);
-void report();
-int retacno();
-int retdeposit();
-char rettype();
-};
+	void create_account();	
+	void show_account();	
+	void modify();   
+	void depo(int);	
+	void w_draw(int);	
+	void report();	
+	int retacno();	
+	int retdeposit();	
+	char rettype();	
+};        
+
+
 
 void account::create_account()
 {
-  cout<<"\n ACCount Num: "; cin>>acno;
-  cout<<"\n Enter Account-Holder Name: "; cin>>name;
-  cout<<"\n choose Account-Type (C/S): "; cin>>type;
-  cout<<"\n Deposit Initial amount (>=$50): "; cin>>amount;
-  cout<<"\n\n\n   Acount Created...";
+	cout << "\nEnter The account No. :"; cin >> acno;
+	cout << "\n\nEnter The Name of The account Holder : "; cin >> name;
+	cout << "\nEnter Type of The account (C/S) : ";  cin >> type;
+	cout << "\nEnter The Initial amount(>=50 for Saving and >=100 for current ) : ";  cin >> amount;
+	cout << "\n\n\nAccount Created..";
 }
 
 void account::show_account()
 {
-  cout<<"\n Account Num: " <<acno;
-  cout<<"\n Acount-Holder Name: " <<name;
-  cout<<"\n Account-Type: " <<type;
-  cout<<"\n Balance: $" <<amount;
+	cout << "\nAccount No. : " << acno;
+	cout << "\nAccount Holder Name : " << name;
+	cout << "\nType of Account : " << type;
+	cout << "\nBalance amount : " << amount;
 }
+
 
 void account::modify()
 {
-  cout<<"\n Account Num: " <<acno;
-  cout<<"\n Enter Account-Holder Name: "; cin>>name;
-  cout<<"\n Choose Account-Type (C/S): "; cin>>type;
-  cout<<"\n Enter Amount: $"; cin>>amount;
+	cout << "\nThe account No." << acno;
+	cout << "\n\nEnter The Name of The account Holder : "; cin >> name;
+	cout << "\nEnter Type of The account (C/S) : "; cin >> type;
+	cout << "\nEnter The amount : "; cin >> amount;
 }
 
 void account::depo(int x)
 {
-  amount +=x;
+	amount += x;
 }
 
-void account::wdraw(int x)
+void account::w_draw(int x)
 {
-  amount -= x
+	amount -= x;
 }
 
 void account::report()
 {
-  cout<<acno <<"\t\t " <<name <<"\t\t" <<type <<"\t$" <<deposit <<endl;
+	cout << acno << "\t\t" << name << "\t\t\t" << type << "\t" << "$ " << deposit << endl;
 }
 
 int account::retacno()
 {
-  return acno;
+	return acno;
 }
 
 int account::retdeposit()
 {
-  return amount;
+	return amount;
+}
+char account::rettype()
+{
+	return type;
 }
 
-int account::rettype()
-{
-  return type;
-}
+
+
 
 // function declaration
 
-void write_account();				      //function to write record in binary file
-void display_sp(int);				      //function to display account details given by user
-void modify_account(int);			    //function to modify record of file
-void delete_account(int);			    //function to delete record of file
-void display_all();					      //function to display all account details
+void write_account();				//function to write record in binary file
+void display_rep(int);				//function to display account details given by user
+void modify_account(int);			//function to modify record of file
+void delete_account(int);			//function to delete record of file
+void display_all();					//function to display all account details
 void deposit_withdraw(int, int);	// function to desposit/withdraw amount for given account
-void intro();						          //introductory screen function
-void transfer(int, int);			    //function to transfer amount.   
+void intro();						//introductory screen function
+void transfer(int, int);			//function to transfer amount.   
 
 
-//THE MAIN FUNCTION
+
+// THE MAIN FUNCTION OF PROGRAM
 
 int main()
 {
@@ -118,7 +126,8 @@ int main()
 		cout << "\t:\t\t\t\t\t\t\t\t\t\t\t:\n\t:\t\t\t\t\t\t\t\t\t\t\t:\n\t:\t\t\t\t\t\t\t\t\t\t\t:\n";
 		cout << "\t:---------------------------------------------------------------------------------------:\n";
 		cout << "\n\n\t\tSelect Your Option (1-9): "; cin >> ch;
-    switch (ch)
+
+		switch (ch)
 		{
 		case '1':
 			system("cls");
@@ -144,7 +153,7 @@ int main()
 		case '5':
 			system("cls");
 			cout << "\n\n\tEnter The account No. : "; cin >> num;
-			display_rec(num);
+			display_rep(num);
 			break;
 		case '6':
 			system("cls");
@@ -170,6 +179,7 @@ int main()
 	} while (ch != '9');
 	return 0;
 }
+
 
 
 // function to write in file
@@ -237,7 +247,7 @@ void modify_account(int n)
 			cout << "\n\nEnter The New Details of account" << endl;
 			ac.modify();
 
-			int pos = (-1) * sizeof(account);
+			int pos = (- 1) * sizeof(account);
 			File.seekp(pos, ios::cur);
 			File.write((char*)&ac, sizeof(account));
 			cout << "\n\n\t Record Updated";
@@ -251,6 +261,8 @@ void modify_account(int n)
 
 
 //    	function to delete record of file
+
+
 void delete_account(int n)
 {
 	account ac;
@@ -340,7 +352,7 @@ void deposit_withdraw(int n, int option)
 				if ((bal < 0 && ac.rettype() == 'S') || (bal < 0 && ac.rettype() == 'C'))
 					cout << "Insufficience balance";
 				else
-					ac.wdraw(amt);
+					ac.w_draw(amt);
 			}
 			int pos = (-1) * sizeof(ac);
 			File.seekp(pos, ios::cur);
@@ -386,7 +398,7 @@ void transfer(int n, int op)
 				if ((bal < 0 && ac.rettype() == 'S') || (bal < 0 && ac.rettype() == 'C'))
 					cout << "Insufficience balance";
 				else
-					ac.wdraw(amt);
+					ac.w_draw(amt);
 			}
 			if (op == 2)
 			{
@@ -420,19 +432,10 @@ void intro()
 	cout << "\t#\t\t\t......................\t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n";
 	cout << "\t#\t\t    DESIGNNED AND PROGRAMMED BY \t\t\t\t\t#\n";
 	cout << "\t#\t\t    ........................... \t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n";
-	cout << "\t#\t\t\t    1, BEREKET DESTA \t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n";
-	cout << "\t#\t\t\t    2, BEREKET LEMMA \t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n";
-	cout << "\t#\t\t\t    3, EPHREM ALEMAYEHU\t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n";
+	cout << "\t#\t\t\t     BEREKET DESTA \t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n";
 	cout << "\t#\tSCHOOL : UNITY UNIVERSITY\t\t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n\t#\t\t\t\t\t\t\t\t\t\t\t#\n";
 	cout << "\t#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>#\n";
 	_getch();
 }
-
-
-
-
-
-
-
 
 
