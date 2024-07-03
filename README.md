@@ -1,2 +1,2 @@
-# C++
-some of my C++ small project collections.
+# Bank Management System C++
+
