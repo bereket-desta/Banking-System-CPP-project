@@ -1,2 +1,2 @@
-# C-
-C++ projects
+# C++
+some of my C++ small project collections.
